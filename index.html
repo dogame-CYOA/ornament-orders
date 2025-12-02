@@ -138,8 +138,8 @@
         /* Selection Grid - shows when no type selected */
         .selection-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
             padding: 16px;
         }
 
@@ -448,7 +448,13 @@
         }
 
         /* Responsive */
-        @media (max-width: 480px) {
+        @media (max-width: 600px) {
+            .selection-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 400px) {
             .selection-grid {
                 grid-template-columns: 1fr;
             }
@@ -562,32 +568,116 @@
         // Ornament types with images
         const ornamentTypes = [
             {
-                id: 'stocking-tag',
-                name: 'Stocking/Name Tag',
-                image: 'images/stocking-tag.jpg',
-                description: 'Rectangular wood tag with floral-decorated letters. Perfect for stockings or gifts.',
-                customizeLabel: 'Enter the name or text for this tag:'
+                id: 'family-tree',
+                name: 'Family Tree',
+                image: 'images/family-tree.jpg',
+                description: 'Arch-shaped ornament with tree and personalized name ornaments for each family member.',
+                customizeLabel: 'Enter family name and all family member names:'
             },
             {
-                id: 'round-initial',
-                name: 'Round Initial Tag',
-                image: 'images/round-initial.jpg',
-                description: 'Round two-tone tag with raised 3D letter. Choose your letter and custom text.',
-                customizeLabel: 'Enter letter and custom text (e.g., "K - From Santa"):'
+                id: 'our-first-home-key',
+                name: 'Our First Home',
+                image: 'images/our-first-home-key.jpg',
+                description: 'House and key shaped ornament. Perfect for new homeowners!',
+                customizeLabel: 'Enter family name and year:'
+            },
+            {
+                id: 'first-christmas-new-home',
+                name: 'First Christmas New Home',
+                image: 'images/first-christmas-new-home.jpg',
+                description: 'Detailed house shape with Christmas lights and wreath. Celebrate your new home!',
+                customizeLabel: 'Enter family name and year:'
+            },
+            {
+                id: 'babys-first-christmas',
+                name: 'Baby\'s First Christmas',
+                image: 'images/babys-first-christmas.jpg',
+                description: 'Round ornament with snowflakes, 3D name, and decorative beads.',
+                customizeLabel: 'Enter baby name and year:'
+            },
+            {
+                id: 'baby-milestone',
+                name: 'Baby Milestone Markers',
+                image: 'images/baby-milestone.jpg',
+                description: 'Arch-shaped monthly milestone markers for baby photos.',
+                customizeLabel: 'Enter any custom requests:'
+            },
+            {
+                id: 'family-name-round',
+                name: 'Family Name Round',
+                image: 'images/family-name-round.jpg',
+                description: 'Round ornament with decorative trees and family name.',
+                customizeLabel: 'Enter family name and year:'
             },
             {
                 id: 'pet-portrait',
                 name: 'Pet Portrait',
                 image: 'images/pet-portrait.jpg',
-                description: 'Custom pet face engraving with wreath border. We\'ll need a photo of your pet!',
-                customizeLabel: 'Enter pet name (send photo to email after ordering):'
+                description: 'Custom pet face engraving with wreath border. Send us a photo of your pet!',
+                customizeLabel: 'Enter pet name (email photo after ordering):'
+            },
+            {
+                id: 'pet-portrait-year',
+                name: 'Pet Portrait with Year',
+                image: 'images/pet-portrait-year.jpg',
+                description: 'Pet portrait with wreath border and year. Send us a photo!',
+                customizeLabel: 'Enter pet name and year (email photo after ordering):'
+            },
+            {
+                id: 'floral-name-tag',
+                name: 'Floral Name Tag',
+                image: 'images/floral-name-tag.jpg',
+                description: 'Rectangular tag with beautiful floral-decorated letters.',
+                customizeLabel: 'Enter the name:'
+            },
+            {
+                id: 'floral-name-tags',
+                name: 'Floral Name Tags',
+                image: 'images/floral-name-tags.jpg',
+                description: 'Rectangular tags with floral letters. Great for stockings or gifts!',
+                customizeLabel: 'Enter name(s) - one per tag:'
+            },
+            {
+                id: 'round-initial-tag',
+                name: 'Round Initial Tag',
+                image: 'images/round-initial-tag.jpg',
+                description: 'Round two-tone tag with raised 3D letter and custom message.',
+                customizeLabel: 'Enter letter, message, and color preference:'
+            },
+            {
+                id: 'gift-tag-round',
+                name: 'Gift Tag Round',
+                image: 'images/gift-tag-round.jpg',
+                description: 'Round gift tag with 3D letter and holiday message.',
+                customizeLabel: 'Enter letter and message:'
+            },
+            {
+                id: 'letter-with-name',
+                name: 'Letter with Name',
+                image: 'images/letter-with-name.jpg',
+                description: 'Large letter-shaped ornament with name engraved.',
+                customizeLabel: 'Enter letter and name:'
             },
             {
                 id: 'initial-bulb',
                 name: 'Initial Bulb',
-                image: 'images/christmas-bulb.jpg',
-                description: 'Classic bulb shape with raised initial letter. Available in multiple colors.',
-                customizeLabel: 'Enter initial letter and color preference:'
+                image: 'images/initial-bulb.jpg',
+                description: 'Christmas light bulb shape with raised initial letter.',
+                customizeLabel: 'Enter initial and color preference:'
+            },
+            {
+                id: 'stocking-tags-3d',
+                name: 'Stocking Tags 3D',
+                image: 'images/stocking-tags-3d.jpg',
+                description: 'Wood tags with raised 3D names. Perfect for stockings!',
+                customizeLabel: 'Enter name(s) - one per tag:'
+            },
+            {
+                id: 'stocking-tag-pennant',
+                name: 'Stocking Tag Pennant',
+                image: 'images/stocking-tag-pennant.jpg',
+                description: 'Pennant-shaped stocking tags with engraved names. Multiple wood tones available.',
+                customizeLabel: 'Enter name(s) and wood tone preference:'
             }
         ];
 
