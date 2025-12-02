@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2025 December Ordering Form</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f5;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 640px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1a73e8, #34a853);
+            color: white;
+            padding: 24px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .form-body {
+            padding: 24px;
+        }
+
+        .field-group {
+            margin-bottom: 24px;
+        }
+
+        label {
+            display: block;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .required::after {
+            content: " *";
+            color: #d93025;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #1a73e8;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        /* Ornament Cards */
+        .ornaments-section {
+            margin-bottom: 24px;
+        }
+
+        .ornament-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            margin-bottom: 16px;
+            background: #fafafa;
+            overflow: hidden;
+            transition: border-color 0.2s;
+        }
+
+        .ornament-card.selected {
+            border-color: #1a73e8;
+        }
+
+        .ornament-card-header {
+            padding: 12px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .ornament-card-header h3 {
+            font-size: 16px;
+            color: #1a73e8;
+        }
+
+        .remove-btn {
+            background: #d93025;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .remove-btn:hover {
+            background: #b71c1c;
+        }
+
+        /* Selection Grid - shows when no type selected */
+        .selection-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            padding: 16px;
+        }
+
+        .selection-option {
+            cursor: pointer;
+            text-align: center;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .selection-option:hover {
+            border-color: #1a73e8;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .selection-option img {
+            width: 100%;
+            max-width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+
+        .selection-option .name {
+            font-weight: 500;
+            color: #333;
+            font-size: 14px;
+        }
+
+        /* Expanded View - shows after selection */
+        .expanded-view {
+            display: none;
+            padding: 20px;
+        }
+
+        .expanded-view.show {
+            display: block;
+        }
+
+        .expanded-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .expanded-image {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            margin-bottom: 16px;
+        }
+
+        .expanded-info {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .expanded-info h4 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .expanded-info p {
+            color: #666;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .change-selection-btn {
+            display: none;
+            background: #1a73e8;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+            padding: 8px 14px;
+            border-radius: 4px;
+        }
+
+        .change-selection-btn:hover {
+            background: #1557b0;
+        }
+
+        .ornament-card.selected .change-selection-btn {
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        .customization-field {
+            width: 100%;
+            margin-top: 8px;
+        }
+
+        .customization-field label {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        /* Buttons */
+        .add-ornament-btn {
+            width: 100%;
+            padding: 14px;
+            background: #34a853;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .add-ornament-btn:hover {
+            background: #2d8e47;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 14px;
+            background: #1a73e8;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .submit-btn:hover {
+            background: #1557b0;
+        }
+
+        .submit-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Review/Summary Section */
+        .review-section {
+            display: none;
+        }
+
+        .review-section.show {
+            display: block;
+        }
+
+        .review-header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .review-header h2 {
+            color: #1a73e8;
+            margin-bottom: 8px;
+        }
+
+        .review-header p {
+            color: #666;
+        }
+
+        .summary-card {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 16px;
+        }
+
+        .summary-card h3 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+        }
+
+        .summary-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .summary-value {
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+            text-align: right;
+        }
+
+        .summary-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            padding: 12px 16px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .summary-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .summary-item-details {
+            flex: 1;
+        }
+
+        .summary-item-type {
+            font-weight: 500;
+            color: #333;
+            margin-bottom: 4px;
+        }
+
+        .summary-item-custom {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .review-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .edit-btn {
+            flex: 1;
+            padding: 14px;
+            background: white;
+            color: #1a73e8;
+            border: 2px solid #1a73e8;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .edit-btn:hover {
+            background: #e8f0fe;
+        }
+
+        .confirm-btn {
+            flex: 1;
+            padding: 14px;
+            background: #34a853;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+        }
+
+        .confirm-btn:hover {
+            background: #2d8e47;
+        }
+
+        .confirm-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+
+        /* Success Message */
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 40px 24px;
+        }
+
+        .success-message.show {
+            display: block;
+        }
+
+        .success-icon {
+            font-size: 64px;
+            margin-bottom: 16px;
+            color: #34a853;
+        }
+
+        .success-message h2 {
+            color: #34a853;
+            margin-bottom: 8px;
+        }
+
+        .form-content.hidden,
+        .review-section.hidden {
+            display: none;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .selection-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .selection-option img {
+                max-width: 150px;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>2025 December Ordering Form</h1>
+            <p>Select your items and customize each one!</p>
+        </div>
+
+        <div class="form-body">
+            <!-- Success Message (hidden by default) -->
+            <div class="success-message" id="successMessage">
+                <div class="success-icon">✓</div>
+                <h2>Order Submitted!</h2>
+                <p>Thank you for your order. We'll be in touch soon!</p>
+            </div>
+
+            <!-- Review/Summary Section (hidden by default) -->
+            <div class="review-section" id="reviewSection">
+                <div class="review-header">
+                    <h2>Review Your Order</h2>
+                    <p>Please confirm the details below before submitting</p>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Contact Information</h3>
+                    <div class="summary-row">
+                        <span class="summary-label">Name</span>
+                        <span class="summary-value" id="summaryName"></span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Email</span>
+                        <span class="summary-value" id="summaryEmail"></span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">Phone</span>
+                        <span class="summary-value" id="summaryPhone"></span>
+                    </div>
+                </div>
+
+                <div class="summary-card">
+                    <h3>Items Ordered</h3>
+                    <div id="summaryItems">
+                        <!-- Items will be populated here -->
+                    </div>
+                </div>
+
+                <div class="summary-card" id="summaryCommentsCard" style="display: none;">
+                    <h3>Comments</h3>
+                    <p id="summaryComments" style="color: #666; font-size: 14px;"></p>
+                </div>
+
+                <div class="review-buttons">
+                    <button type="button" class="edit-btn" onclick="editOrder()">Edit Order</button>
+                    <button type="button" class="confirm-btn" id="confirmBtn" onclick="submitOrder()">Submit Order</button>
+                </div>
+            </div>
+
+            <!-- Form Content -->
+            <div class="form-content" id="formContent">
+                <form id="orderForm">
+                    <!-- Customer Info -->
+                    <div class="field-group">
+                        <label for="customerName" class="required">Your Name</label>
+                        <input type="text" id="customerName" name="customerName" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="customerEmail" class="required">Email</label>
+                        <input type="email" id="customerEmail" name="customerEmail" required>
+                    </div>
+
+                    <div class="field-group">
+                        <label for="customerPhone">Phone (optional)</label>
+                        <input type="tel" id="customerPhone" name="customerPhone">
+                    </div>
+
+                    <!-- Ornaments Section -->
+                    <div class="ornaments-section">
+                        <label class="required">Your Order</label>
+                        <div id="ornamentsList">
+                            <!-- Ornament cards will be added here -->
+                        </div>
+                        <button type="button" class="add-ornament-btn" id="addOrnamentBtn">
+                            <span>+</span> Add Another Item
+                        </button>
+                    </div>
+
+                    <!-- Additional Comments -->
+                    <div class="field-group">
+                        <label for="comments">Other thoughts or comments</label>
+                        <textarea id="comments" name="comments" placeholder="Any special requests or questions..."></textarea>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="reviewBtn">Review Order</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Ornament types with images
+        const ornamentTypes = [
+            {
+                id: 'stocking-tag',
+                name: 'Stocking/Name Tag',
+                image: 'images/stocking-tag.jpg',
+                description: 'Rectangular wood tag with floral-decorated letters. Perfect for stockings or gifts.',
+                customizeLabel: 'Enter the name or text for this tag:'
+            },
+            {
+                id: 'round-initial',
+                name: 'Round Initial Tag',
+                image: 'images/round-initial.jpg',
+                description: 'Round two-tone tag with raised 3D letter. Choose your letter and custom text.',
+                customizeLabel: 'Enter letter and custom text (e.g., "K - From Santa"):'
+            },
+            {
+                id: 'pet-portrait',
+                name: 'Pet Portrait',
+                image: 'images/pet-portrait.jpg',
+                description: 'Custom pet face engraving with wreath border. We\'ll need a photo of your pet!',
+                customizeLabel: 'Enter pet name (send photo to email after ordering):'
+            },
+            {
+                id: 'initial-bulb',
+                name: 'Initial Bulb',
+                image: 'images/christmas-bulb.jpg',
+                description: 'Classic bulb shape with raised initial letter. Available in multiple colors.',
+                customizeLabel: 'Enter initial letter and color preference:'
+            }
+        ];
+
+        let ornamentCount = 0;
+
+        // Create ornament card HTML
+        function createOrnamentCard(index) {
+            const cardId = `ornament-${index}`;
+
+            // Build selection grid
+            const gridHtml = ornamentTypes.map(type => `
+                <div class="selection-option" onclick="selectOrnament('${cardId}', '${type.id}')">
+                    <img src="${type.image}" alt="${type.name}">
+                    <div class="name">${type.name}</div>
+                </div>
+            `).join('');
+
+            return `
+                <div class="ornament-card" id="${cardId}" data-selected="">
+                    <div class="ornament-card-header">
+                        <h3>Item #${index + 1}</h3>
+                        <div>
+                            <button type="button" class="change-selection-btn" onclick="changeSelection('${cardId}')">Select A Different Item</button>
+                            ${index > 0 ? `<button type="button" class="remove-btn" onclick="removeOrnament('${cardId}')">Remove</button>` : ''}
+                        </div>
+                    </div>
+
+                    <!-- Selection Grid -->
+                    <div class="selection-grid" id="${cardId}-grid">
+                        ${gridHtml}
+                    </div>
+
+                    <!-- Expanded View (hidden until selection) -->
+                    <div class="expanded-view" id="${cardId}-expanded">
+                        <div class="expanded-content">
+                            <img class="expanded-image" id="${cardId}-image" src="" alt="">
+                            <div class="expanded-info">
+                                <h4 id="${cardId}-name"></h4>
+                                <p id="${cardId}-description"></p>
+                            </div>
+                            <div class="customization-field">
+                                <label for="${cardId}-text" id="${cardId}-customLabel">Customization:</label>
+                                <input type="text" id="${cardId}-text" name="${cardId}-text" placeholder="Enter your customization...">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Select ornament type
+        function selectOrnament(cardId, typeId) {
+            const card = document.getElementById(cardId);
+            const type = ornamentTypes.find(t => t.id === typeId);
+
+            if (!type) return;
+
+            // Store selection
+            card.dataset.selected = type.name;
+            card.classList.add('selected');
+
+            // Hide grid, show expanded
+            document.getElementById(`${cardId}-grid`).style.display = 'none';
+            document.getElementById(`${cardId}-expanded`).classList.add('show');
+
+            // Populate expanded view
+            document.getElementById(`${cardId}-image`).src = type.image;
+            document.getElementById(`${cardId}-image`).alt = type.name;
+            document.getElementById(`${cardId}-name`).textContent = type.name;
+            document.getElementById(`${cardId}-description`).textContent = type.description;
+            document.getElementById(`${cardId}-customLabel`).textContent = type.customizeLabel;
+
+            // Focus on customization field
+            document.getElementById(`${cardId}-text`).focus();
+        }
+
+        // Change selection (go back to grid)
+        function changeSelection(cardId) {
+            const card = document.getElementById(cardId);
+
+            // Clear selection
+            card.dataset.selected = '';
+            card.classList.remove('selected');
+
+            // Show grid, hide expanded
+            document.getElementById(`${cardId}-grid`).style.display = 'grid';
+            document.getElementById(`${cardId}-expanded`).classList.remove('show');
+
+            // Clear customization
+            document.getElementById(`${cardId}-text`).value = '';
+        }
+
+        // Add ornament card
+        function addOrnament() {
+            const container = document.getElementById('ornamentsList');
+            container.insertAdjacentHTML('beforeend', createOrnamentCard(ornamentCount));
+            ornamentCount++;
+        }
+
+        // Remove ornament card
+        function removeOrnament(cardId) {
+            const card = document.getElementById(cardId);
+            if (card) {
+                card.remove();
+                renumberOrnaments();
+            }
+        }
+
+        // Renumber ornaments after removal
+        function renumberOrnaments() {
+            const cards = document.querySelectorAll('.ornament-card');
+            cards.forEach((card, index) => {
+                const title = card.querySelector('h3');
+                title.textContent = `Item #${index + 1}`;
+            });
+        }
+
+        // Collect form data
+        function collectFormData() {
+            const formData = {
+                customerName: document.getElementById('customerName').value,
+                customerEmail: document.getElementById('customerEmail').value,
+                customerPhone: document.getElementById('customerPhone').value,
+                comments: document.getElementById('comments').value,
+                ornaments: [],
+                submittedAt: new Date().toLocaleString()
+            };
+
+            // Collect ornament data
+            const cards = document.querySelectorAll('.ornament-card');
+            cards.forEach((card) => {
+                const selectedType = card.dataset.selected;
+                const customText = card.querySelector('input[type="text"]').value;
+
+                if (selectedType) {
+                    formData.ornaments.push({
+                        type: selectedType,
+                        customization: customText
+                    });
+                }
+            });
+
+            return formData;
+        }
+
+        // Submit to Google Sheets
+        async function submitToGoogleSheets(data) {
+            const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbymqIVmRRUut7tKcJL9KBwS1YSgmtRDMsSEKJyNvF7O-kpdaMzdxwtvaJ7OJb4MQJA/exec';
+
+            try {
+                const response = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    mode: 'no-cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                return true;
+            } catch (error) {
+                console.error('Submission error:', error);
+                return false;
+            }
+        }
+
+        // Store form data globally for submission
+        let pendingFormData = null;
+
+        // Show review page
+        function showReview() {
+            const formData = collectFormData();
+
+            // Validate at least one item selected
+            if (formData.ornaments.length === 0) {
+                alert('Please select at least one item.');
+                return;
+            }
+
+            // Store for later submission
+            pendingFormData = formData;
+
+            // Populate summary
+            document.getElementById('summaryName').textContent = formData.customerName;
+            document.getElementById('summaryEmail').textContent = formData.customerEmail;
+            document.getElementById('summaryPhone').textContent = formData.customerPhone || 'Not provided';
+
+            // Populate items
+            const itemsContainer = document.getElementById('summaryItems');
+            itemsContainer.innerHTML = formData.ornaments.map((item, index) => {
+                const type = ornamentTypes.find(t => t.name === item.type);
+                return `
+                    <div class="summary-item">
+                        <img src="${type ? type.image : ''}" alt="${item.type}">
+                        <div class="summary-item-details">
+                            <div class="summary-item-type">${item.type}</div>
+                            <div class="summary-item-custom">"${item.customization || 'No customization'}"</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            // Show/hide comments
+            const commentsCard = document.getElementById('summaryCommentsCard');
+            if (formData.comments) {
+                commentsCard.style.display = 'block';
+                document.getElementById('summaryComments').textContent = formData.comments;
+            } else {
+                commentsCard.style.display = 'none';
+            }
+
+            // Show review, hide form
+            document.getElementById('formContent').classList.add('hidden');
+            document.getElementById('reviewSection').classList.add('show');
+
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        // Go back to edit
+        function editOrder() {
+            document.getElementById('reviewSection').classList.remove('show');
+            document.getElementById('formContent').classList.remove('hidden');
+        }
+
+        // Submit the order
+        async function submitOrder() {
+            if (!pendingFormData) return;
+
+            const confirmBtn = document.getElementById('confirmBtn');
+            confirmBtn.disabled = true;
+            confirmBtn.textContent = 'Submitting...';
+
+            const success = await submitToGoogleSheets(pendingFormData);
+
+            if (success) {
+                document.getElementById('reviewSection').classList.remove('show');
+                document.getElementById('reviewSection').classList.add('hidden');
+                document.getElementById('successMessage').classList.add('show');
+            } else {
+                alert('There was an error submitting your order. Please try again.');
+                confirmBtn.disabled = false;
+                confirmBtn.textContent = 'Submit Order';
+            }
+        }
+
+        // Form review handler (not submit yet)
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            showReview();
+        });
+
+        // Add button listener
+        document.getElementById('addOrnamentBtn').addEventListener('click', addOrnament);
+
+        // Initialize with one ornament card
+        addOrnament();
+    </script>
+</body>
+</html>
